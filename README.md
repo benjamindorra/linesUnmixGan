@@ -15,7 +15,7 @@ For more information, visit [the github.io page](https://benjamindorra.github.io
 
 ### Test
 
-To test the performance, download the pretrained weights and add them in the netWeights/ directory.
+To test the performance, download the pretrained weights and add them in the netWeights/ directory using git LFS.
 
 Then launch either testUNetHW.py or testFPNHW.py.
 
