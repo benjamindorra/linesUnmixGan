@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<title>SV project page</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="styles/layout.css" type="text/css">
+<!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
+</head>
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <h1><a href="index.html">GANs and style transfer</a></h1>
+      <h2>Master's project</h2>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gan_architecture.html">GAN Architecture</a></li>
+        <li><a href="printed_text.html">Printed Text</a></li>
+        <li class="last"><a href="handwritten_text.html">Handwritten Text</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+<!-- content -->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <!-- content body -->
+    <section id="shout">
+      <h1>Unmixing entangled lines of text with a GAN</h1>
+    </section>
+    <!-- main content -->
+    <section id="shout" class="clear">
+	   <h1><center>Printed text</center></h1>
+    </section>
+    <!-- ########################################################################################## -->
+    <!-- ########################################################################################## -->
+    <!-- ########################################################################################## -->
+    <!-- ########################################################################################## -->
+    <section class="last clear">
+     <article class="three_third lastbox">
+        <h2>Introduction</h2>
+        <p>In this part, the goal is to separate two entangled lines of text in printed text characters.</p>
+	<article class="three_third lastbox">
+        <h2><br>Dataset</h2>
+        <p>Printing errors that end up mixing two lines are not so common, and to the best of my knowledge there is no existing dataset for this problem. Therefore I generate a training and a validation dataset with a bash script, using LaTex and ImageMagick. The training set contains 10001 images, and the validation set contains 1001 images. The images are 256x256 with the two lines of text in font 10 at 100dpi. See below for a few examples.</p>
+        <img src="images/trainset_printed0.png" alt="">
+        <img src="images/trainset_printed1.png" alt="">
+        <img src="images/trainset_printed2.png" alt="">
+     <article class="three_third lastbox">
+        <h2><br>Original approach</h2>
+        <p>At first my idea, following the project instructions, was to take the image as input and output only
+ the first line. The network only took a one channel image as input, and outputted only a one channel image,
+ which should be the line on top. However this approach had poor results and even after tweaking the GAN
+ parameters I was unable to train an effective model. See below a few examples of the output of this model 
+(from left to right: input image, expected output, actual output).</p>
+	<img src="images/validset_legacy0.png" alt="">
+	<img src="images/validset_legacy0_expected.png" alt="">
+	<img src="images/validset_legacy0_result.png" alt=""><br>
+	<img src="images/validset_legacy1.png" alt="">
+	<img src="images/validset_legacy1_expected.png" alt="">
+	<img src="images/validset_legacy1_result.png" alt=""><br>
+	<img src="images/validset_legacy2.png" alt="">
+	<img src="images/validset_legacy2_expected.png" alt="">
+	<img src="images/validset_legacy2_result.png" alt="">
+<article class="three_third lastbox">
+        <h2><br>3 channel approach</h2>
+        <p>After this (relative) failure, I decided to change to a 3 channel input and output. The output of
+ the network would then be a 3 channel image with, on each channel respectively:</p>
+<p>	1) the first line</p>
+<p>	2) the second line</p>
+<p>	3) the background</p>
+<p>Strictly speaking, the third channel with the background is unnecessary for the desired result.
+ However, the idea behind it was to use it as a condition to help the network converge,
+ with a condition such as channel1+channel2=1-channel3. However this was not necessary since this 3 channel
+ approach was immediately much more successful than the original one.</p> 
+<p>Regarding the practical implementation, the images are still 256x256.
+ 10001 training images and 1001 validation images have been generated.
+ The GAN has been trained for 30 epochs.
+ See below for some of the results on the validation set 
+(from left to right: input image, expected output, actual output).</p>
+      	<img src="images/validset_printed0.png" alt="">
+	<img src="images/validset_printed0_expected.png" alt="">
+	<img src="images/validset_printed0_result.png" alt=""><br>
+      	<img src="images/validset_printed1.png" alt="">
+	<img src="images/validset_printed1_expected.png" alt="">
+	<img src="images/validset_printed1_result.png" alt=""><br>
+      	<img src="images/validset_printed2.png" alt="">
+	<img src="images/validset_printed2_expected.png" alt="">
+	<img src="images/validset_printed2_result.png" alt=""><br>     
+    </section>
+    <!-- / content body -->
+  </div>
+</div>
+<!-- footer -->
+<div class="wrapper row3">
+  <footer id="footer" class="clear">
+    <p class="fl_right">Template by <a target="_blank" href="https://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
+  </footer>
+</div>
+</body>
+</html>
+
+

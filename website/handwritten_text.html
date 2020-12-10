@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<title>SV project page</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="styles/layout.css" type="text/css">
+<!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
+</head>
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <h1><a href="index.html">GANs and style transfer</a></h1>
+      <h2>Master's project</h2>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gan_architecture.html">GAN Architecture</a></li>
+        <li><a href="printed_text.html">Printed Text</a></li>
+        <li class="last"><a href="handwritten_text.html">Handwritten Text</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+<!-- content -->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <!-- content body -->
+    <section id="shout">
+      <h1>Unmixing entangled lines of text with a GAN</h1>
+    </section>
+    <!-- main content -->
+    <section id="shout" class="clear">
+	   <h1><center>Handwritten text</center></h1>
+    </section>
+    <!-- ########################################################################################## -->
+    <!-- ########################################################################################## -->
+    <!-- ########################################################################################## -->
+    <!-- ########################################################################################## -->
+    <section class="last clear">
+     <article class="three_third lastbox">
+        <h2>Introduction</h2>
+        <p>In this part, the goal is to separate two entangled lines of handwritten text. This task is more challenging than printed text, with much more variety between different writings, and variation between two characters even with the same writer. However we use the exact same GAN architecture to separate the lines. However, in addition to the U-Net architecture, we test a FPN based generator. It is lighter and seems to achieve better results.</p>
+	<article class="three_third lastbox">
+        <h2><br>Dataset</h2>
+<p>Finding a vast lines segmentation dataset was surprisingly difficult. On the advice of my supervisors I attempted to use the ICDAR 2013 lines segmentation challenge dataset, However the training set only contains 200 images, with many in greek and arabic which are outside this project's ambitions. And among those 200 images there are actually very few entangled lines. Furthermore, the annotation is surprisingly hard to use.</p>
+<p>Therefore I decided to use the ICDAR dataset as a test dataset only. The training and validation sets are created using the IAM database, which contains more than a hundred thousand images of handwritten text. I made a python script that uses OpenCV to combine images from the IAM handwritten words dataset into two lines, either very close to each other or with intersections between the lines. The images are 512x256. The script also outputs the ground truth for each image.</p>
+<p>The final dataset is as follows: 8990 images for the training set, 995 images for the validation set and 10 images for the test set.</p>
+<img src="images/trainset_handwritten0.png" alt="" width="256">
+<img src="images/trainset_handwritten1.png" alt="" width="256">
+<img src="images/trainset_handwritten2.png" alt="" width="256">
+	<article class="three_third lastbox">
+        <h2><br>Training</h2>
+        <p>First the mean pixel values and the standard deviation of each channel are computed for the training set and the ground truts. These values are used during the training to normalize the input values for the generator and the discriminator. The network is then trained on the training set for 35 epochs. During the training, affine transforms are used on the input and target images of the training set. As the FPN generator is lighter, it can be trained faster and follows 100 epochs of training.</p>
+      <article class="three_third lastbox">
+        <h2><br>Results on the validation set</h2>
+        <p>In general, the generator makes some mistakes but it is very good at finding the general shape of the letters and at distinguishing the top line from the bottom line.</p>
+	<img src="images/validset_handwritten0.png" alt="" width="256">
+        <img src="images/validset_handwritten0_expected.png" alt="" width="256">
+        <img src="images/validset_handwritten0_result.png" alt="" width="256"><br>
+        <img src="images/validset_handwritten1.png" alt="" width="256">
+        <img src="images/validset_handwritten1_expected.png" alt="" width="256">
+        <img src="images/validset_handwritten1_result.png" alt="" width="256"><br>
+        <img src="images/validset_handwritten2.png" alt="" width="256">
+        <img src="images/validset_handwritten2_expected.png" alt="" width="256">
+        <img src="images/validset_handwritten2_result.png" alt="" width="256">
+<article class="three_third lastbox">
+        <h2><br>Results on the ICDAR dataset</h2>
+        <p>From left to right: original image, U-Net output, FPN output. In general, the results on the test set is good. Despite a few mistakes and artefacts the networks generalize quite well, with a few glitches for U-Net. One weird detail is that the networks seem to prefer slightly blurry letters, otherwise only the border is segmented. To compensate for this a light gaussian blur is added to the test script.</p>
+	<img src="images/testset_handwritten0.png" alt="" width="256">
+        <img src="images/testset_handwritten0_result_unet.png" alt="" width="256">
+        <img src="images/testset_handwritten0_result_fpn.png" alt="" width="256"><br>
+        <img src="images/testset_handwritten1.png" alt="" width="256">
+        <img src="images/testset_handwritten1_result_unet.png" alt="" width="256">
+        <img src="images/testset_handwritten1_result_fpn.png" alt="" width="256"><br>
+
+      
+    </section>
+    <!-- / content body -->
+  </div>
+</div>
+<!-- footer -->
+<div class="wrapper row3">
+  <footer id="footer" class="clear">
+    <p class="fl_right">Template by <a target="_blank" href="https://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
+  </footer>
+</div>
+</body>
+</html>
+
+
+
